@@ -1,0 +1,28 @@
+
+<!-- for login -->
+{% extends "zing_it/base.html" %}
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href="{% static 'zing_it/css/songs.css' %}" /> {% endblock %}
+{% block title %}Login{% endblock %}
+
+{% block heading %}Login{% endblock %} 
+
+
+{% block content %} 
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+    
+    <div style="text-align: center;">
+        <input type="submit" value="Login" name="btn">
+    </div>
+
+    </form>
+    <br>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+    <br>
+    <b><span>{{status}}</span></b>
+{% endblock %}

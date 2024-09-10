@@ -1,0 +1,78 @@
+{% extends "zing_it/base.html" %}
+
+{% load static %}
+
+{% block css %} <link rel="stylesheet" href= "{% static 'zing_it/css/home.css' %}"/> {% endblock %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+
+<div class="centered-text">
+  <h2>Welcome to the Home Page</h2>
+  {% if user.is_authenticated %}
+    <p>Logged in as {{ user.username }}.</p>
+  {% else %}
+    <p>You are not logged in. Please <a href="{% url 'login' %}">log in</a> to access more content.</p>
+  {% endif %}
+  <br>
+</div>
+
+
+  <div id="message" style="display: none; color: red;"></div>
+
+
+
+  <div class="box">
+    {% for playlist in my_playlists %}
+        <div class="card">
+          <a class="view-protected-content" href="{% url 'playlist' playlist.id  %}">     <!--# 修改过id--> 
+            <div class="imgBx">
+                <img src="https://cdn.pixabay.com/photo/2017/01/29/01/01/music-2016915_960_720.jpg" alt="images">
+            </div>
+            <div class="details">
+                <h2>{{playlist.name}}
+                <br>
+                <span>{{playlist.numberOfSongs}}</span>
+              </h2>
+            </div>
+          </a>
+        </div>
+    {% endfor%}
+  </div>
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.view-protected-content').click(function(event) {
+        event.preventDefault(); // Prevent the default link behavior(跳转)
+        $.ajax({
+            url: '{% url "check_login_status" %}',  // 检查用户登录状态
+            type: 'GET',
+            success: function(data) {
+                // Assuming `protected_content` is the URL you want to check
+                if (data.redirect) {
+                  $('#message').text('You need to be logged in to view this content.').show(); // 用户没登录，提示登录信息
+                } else {
+                  // 用户已登录，执行跳转或显示受保护内容
+                  $('#message').hide(); // 隐藏提示信息
+                  window.location.href = $('.view-protected-content').attr('href'); // 访问内容
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
+
+
+    
+
+
+
+

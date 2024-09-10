@@ -1,0 +1,26 @@
+{% extends "zing_it/base.html" %}
+{% load static %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'zing_it/css/songs.html' %}" /> {% endblock %}
+
+
+{% block title %}Edit{% endblock %} 
+{% block heading %}Edit Song{% endblock %}
+
+{% block content %}
+
+<form submit="POST" action="">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+
+    <div style="align-items: center;">
+        <input type="submit" value="Edit" name="btn">
+    </div>
+
+</form>
+<br>
+<b><span>{{status}}</span></b>
+
+{% endblock %}

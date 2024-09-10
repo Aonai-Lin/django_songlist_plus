@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- <style>
+        .heading_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;  /* 如果需要垂直居中 */
+        }
+    </style> -->
+    {% block css %} {% endblock %}
+    <title>{% block title %}{% endblock %} </title>
+</head>
+<body>
+    <!-- 相对路径的写法：href="{% url 'home' %}" -->
+     <div>
+     <ul style="list-style-type: none; float: right; font-size: large;">
+        <li style="display:inline"><a href="{% url 'home' %}">Home</a></li>
+        <li style="display:inline"><a href="{% url 'signup' %}">Sign Up</a></li>
+        {% if user.is_authenticated %}  <!--最后面有个d-->
+        <li style="display:inline"><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li style="display:inline"><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+     </ul>
+    </div>
+
+     <!-- <div class="heading_container"> -->
+    <div>
+        <h1 id="title" > {% block heading %} {% endblock %} </h1>
+     </div>
+    
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+
+    {% block extra_scripts %}{% endblock %}     <!--模板内就要预留给子模板的js位置-->
+</body>
+</html>

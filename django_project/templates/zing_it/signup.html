@@ -1,0 +1,37 @@
+{% extends "zing_it/base.html" %}
+{% load static %}
+
+<!-- css引用不熟练 -->
+{% block css %}<link rel="stylesheet" href="{% static 'zing_it/css/songs.css' %}"/>{% endblock %}
+
+{% block title %}Signup{% endblock %} 
+
+{% block heading %}Signup{% endblock %} 
+
+{% block content %} 
+<!-- 提交方法是post，提交后到当前url -->
+<form method="POST" action="">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}       <!--  table标签内，form.as_table -->
+    </table>
+    
+    <div style="text-align: center;">
+        <input type="submit" value="signup" name="btn">
+    </div>
+    
+</form>
+
+<br>
+<p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+<br>
+<b><span>{{status}}</span></b>
+
+
+{% endblock %}
+
+<!-- <form method="POST" action="">
+    {% csrf_token %}
+    {{ form.as_p }}  
+    <input type="submit" value="signup" name="btn">
+</form> form以p标签包围--->
